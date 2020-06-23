@@ -14,7 +14,9 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Http\Controllers';
+    protected $websiteNamespace = 'App\Http\Controllers\Website';
+
+    protected $dashboardNamespace = 'App\Http\Controllers\Dashboard';
 
     /**
      * The path to the "home" route for your application.
@@ -59,8 +61,15 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-            ->namespace($this->namespace)
+            ->namespace($this->websiteNamespace)
             ->group(base_path('routes/web.php'));
+    }
+    protected function mapDashboardRoutes()
+    {
+        Route::middleware('admin')
+            ->prefix('{lang}/dashboard')
+            ->namespace($this->dashboardNamespace)
+            ->group(base_path('routes/dashboard.php'));
     }
 
     /**
