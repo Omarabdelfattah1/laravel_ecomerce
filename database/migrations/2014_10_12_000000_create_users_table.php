@@ -21,9 +21,11 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('address')->nullable();
             $table->string('image')->nullable();
-            $table->string('gender')->nullable();
-            $table->integer('phone')->nullable();
-            $table->integer('role')->default(0);
+            $table->timestamp('date_birth')->nullable();
+            $table->string('identify_card')->nullable();
+            $table->enum('gender', ['male', 'female'])->nullable();
+            $table->string('phone')->nullable();
+            $table->enum('role', ['admin', 'user', 'seller'])->default('user');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -36,8 +38,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        
-        
+
+
         Schema::dropIfExists('users');
     }
 }
