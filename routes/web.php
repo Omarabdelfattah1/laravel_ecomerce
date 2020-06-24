@@ -14,9 +14,27 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('website.home.wishlist');
+    return view('website.home.index');
 });
 
 Auth::routes();
-
+Route::resource('categories','CategoriesController');
+Route::post('categories/subcategories/{id}','CategoriesController@subCategories')->name('categories.subcategories');
+Route::resource('subcategories','SubCategoriesController');
+Route::resource('products','ProductsController');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'PagesController@dashboard');
+// Route::group(['middleware' => 'auth'], function () {
+//     Route::get('dashboard', function() {
+//         if($this->user->isAdmin())
+//             return redirect('/dashboard/admin');
+//         if($this->user->isManager())
+//             return redirect('/dashboard/manager');
+
+//         return redirect('/home');
+//     });
+
+//     Route::get('dashboard/admin', 'Admin\dashboard@index');
+//     Route::get('dashboard/manage', 'Manager\dashboard@index');
+//     Route::get('users', 'PagesController@manageUsers');
+// });
