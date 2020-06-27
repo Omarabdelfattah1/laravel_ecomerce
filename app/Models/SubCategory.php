@@ -9,6 +9,7 @@ use Astrotomic\Translatable\Translatable;
 class SubCategory extends Model implements TranslatableContract
 {
     protected $table = 'sub_category';
+    protected $fillable=['category_id'];
     use Translatable;
     public $translatedAttributes = ['name', 'description'];
     public function products()

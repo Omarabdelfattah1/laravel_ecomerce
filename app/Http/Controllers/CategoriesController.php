@@ -25,6 +25,9 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function create()
+    {
+    }
     public function store(Request $request)
     {
         Category::create($request->except('_token'));
@@ -47,6 +50,9 @@ class CategoriesController extends Controller
 
         return redirect()->route('categories.index');
     }
+    public function show($id)
+    {
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -62,7 +68,13 @@ class CategoriesController extends Controller
         return redirect()->route('categories.index');
     }
 
-    public function subCategories($id){
-        return ["subcategories"=>Category::find($id)->sub_categories];
-    }
+    // public function subCategories(Request $request){
+    //         $subcategories=Category::find($request->id)->sub_categories;
+    //         $res="";
+    //         foreach($subcategories as $category)
+    //         {
+    //             $res+="<option value='".$category->id."'>".$category->name."</option>";
+    //         };
+    //         return $res;
+    // }
 }

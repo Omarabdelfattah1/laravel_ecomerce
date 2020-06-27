@@ -26,7 +26,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        return view('dashboard.products.create');
+        return view('dashboard.products.create')->with('categories',Category::all());
     }
 
     /**

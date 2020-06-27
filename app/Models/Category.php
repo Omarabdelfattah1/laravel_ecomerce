@@ -10,7 +10,6 @@ class Category extends Model implements TranslatableContract
     protected $table = 'category';
     use Translatable;
     public $translatedAttributes = ['name', 'description'];
-    
 
     public function sub_categories()
     {

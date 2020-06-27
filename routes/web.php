@@ -19,7 +19,12 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::resource('categories','CategoriesController');
-Route::post('categories/subcategories/{id}','CategoriesController@subCategories')->name('categories.subcategories');
+
+Route::get('/sub-categories',function(){
+    $cat=Input::input('id');
+    $category=App\Models\subCategory::where('category_id','=',$cat)->get();
+    return $category;
+});
 Route::resource('subcategories','SubCategoriesController');
 Route::resource('products','ProductsController');
 Route::get('/home', 'HomeController@index')->name('home');

@@ -3,6 +3,7 @@
 
 @section('content')
 
+
 <!-- Container-fluid starts-->
 <div class="container-fluid">
     <div class="page-header">
@@ -60,17 +61,17 @@
                             <div class="form">
                                 <div class="form-group mb-3 row">
                                     <label for="validationCustom01" class="col-xl-3 col-sm-4 mb-0">Title :</label>
-                                    <input class="form-control col-xl-8 col-sm-7" id="validationCustom01" name="en[name]" type="text" required="">
+                                    <input class="form-control col-xl-8 col-sm-7" name="en[name]" type="text" required="">
                                     <div class="valid-feedback">Looks good!</div>
                                 </div>
                                 <div class="form-group mb-3 row">
                                     <label for="validationCustom02" class="col-xl-3 col-sm-4 mb-0">Description :</label>
-                                    <input class="form-control col-xl-8 col-sm-7" name="en[description]" id="validationCustom02" type="text" required="">
+                                    <input class="form-control col-xl-8 col-sm-7" name="en[description]" type="text" required="">
                                     <div class="valid-feedback">Looks good!</div>
                                 </div>
                                 <div class="form-group mb-3 row">
                                     <label for="validationCustom02" class="col-xl-3 col-sm-4 mb-0">Price :</label>
-                                    <input class="form-control col-xl-8 col-sm-7" name="price" id="validationCustom02" type="number" required="">
+                                    <input class="form-control col-xl-8 col-sm-7" name="price" type="number" required="">
                                     <div class="valid-feedback">Looks good!</div>
                                 </div>
                                 <!-- <div class="form-group mb-3 row">
@@ -80,12 +81,22 @@
                                 </div> -->
                             </div>
                             <div class="form">
-                                <div class="form-group row" id="ref">
+                                <div class="form-group row" >
                                     <label for="exampleFormControlSelect1" class="col-xl-3 col-sm-4 mb-0">Category :</label>
-                                    <select name="category" class="form-control digits col-xl-8 col-sm-7" id="exampleFormControlSelect1">
+                                    <select name="category" class="form-control digits col-xl-8 col-sm-7" id="category">
+                                        <option disabled selected value> -- select a category -- </option>
                                         @foreach($categories as $category)
-                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                            <option  value="{{$category->id}}">
+                                                {{$category->name}}
+                                            </option>
+
                                         @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group row" id="ref">
+                                    <label for="exampleFormControlSelect1" class="col-xl-3 col-sm-4 mb-0">SubCategory :</label>
+                                    <select  name="sub_category" class="form-control digits col-xl-8 col-sm-7" id="sub_categories">
+                                        
                                     </select>
                                 </div>
                                 <div class="form-group row">
@@ -124,26 +135,7 @@
     <script src="../assets/js/touchspin/vendors.min.js"></script>
     <script src="../assets/js/touchspin/touchspin.js"></script>
     <script src="../assets/js/touchspin/input-groups.min.js"></script>
-    <script>
-        // function myFunction() {
-        //     var x = $("#exampleFormControlSelect1").value;
-        //     $.get("{{route('subcatecories.index',x)}}",function(data,){
-        //         $("#ref").after(`
-        //         <div class="form-group row" id="ref">
-        //             <label for="exampleFormControlSelect1" class="col-xl-3 col-sm-4 mb-0">Category :</label>
-        //             <select name="category" class="form-control digits col-xl-8 col-sm-7" id="exampleFormControlSelect1">
-        //                 @foreach($data as $category)
-        //                     <option value="{{$category->id}}">{{$category->name}}</option>
-        //                 @endforeach
-        //             </select>
-        //         </div>
-        //         `);
-        //     });
-        // }
-</script>
-
-    <!-- form validation js-->
-    <script src="../assets/js/dashboard/form-validation-custom.js"></script>
+    
 
     <!-- ckeditor js-->
     <script src="../assets/js/editor/ckeditor/ckeditor.js"></script>
@@ -154,5 +146,46 @@
     <!-- Zoom js-->
     <script src="../assets/js/jquery.elevatezoom.js"></script>
     <script src="../assets/js/zoom-scripts.js"></script>
+    <script>
+    
+        // $(document).on('change','#category',function(e){
+
+                
+        //         var x = $(this).children("option:selected").val();
+        //         // $.ajaxSetup({
+        //         //     headers: {
+        //         //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         //     }
+        //         // });
+
+        //         $.ajax({
+        //             url: '/categories/subcategories',
+        //             dataType : 'html',
+        //             type: 'GET',
+        //             data:{id:x},
+        //             processData: false,
+        //             contentType: false,
+        //             success:function(response) {
+        //                 console.log(response);
+        //                 $("#sub_categories").html(
+        //                     response
+        //                 );
+        //             }
+        //         });
+
+        // });
+        $('#category').on('change',function(e){
+                console.log(e);
+                var cat_id=e.target.value;
+                $('#sub_categories').empty();
+                console.log(cat_id);
+                $.get('/sub-categories?id=' + cat_id,function(data){
+                    $.each(data,function(index,subCatObj){
+                        $('#sub_categories').append('<option value="'+subCatObj.id+'">'+subCatObj.name+'</option>')
+                    });
+                });
+                
+        });
+</script>
 @endsection
 

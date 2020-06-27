@@ -36,7 +36,8 @@
 
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/admin.css') }}">
-
+    
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('css')
 </head>
 
