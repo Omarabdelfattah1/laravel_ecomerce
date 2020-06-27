@@ -33,21 +33,20 @@
             <div class="col-sm-12">
                 <div class="card tab2-card">
                     <div class="card-header">
-                        <h5> Add Vendor</h5>
-                        <div class="btn-popup pull-right">
-                            <a class="btn btn-primary" href="{{ route('seller.create') }}">Add Vendor</a>
-                        </div>
+                        <h5> Edit Vendor</h5>
                     </div>
                     <div class="card-body">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade active show" id="account" role="tabpanel" aria-labelledby="account-tab">
-                                <form class="needs-validation user-add" action="{{ route('seller.store') }}"
+                                <form class="needs-validation user-add" action="{{ route('seller.update', $seller) }}"
                                       method="POST">
                                     @csrf
+                                    @method('PUT')
                                     <h4>Company</h4>
                                     <div class="form-group row">
                                         <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span> Company Name</label>
-                                        <input class="form-control col-xl-8 col-md-7" id="validationCustom0" type="text" name="name">
+                                        <input class="form-control col-xl-8 col-md-7" id="validationCustom0"
+                                               type="text" value="{{ $seller->name }}" name="name">
                                     </div>
                                     <div class="pull-right">
                                         <button type="submit" class="btn btn-primary">Save</button>

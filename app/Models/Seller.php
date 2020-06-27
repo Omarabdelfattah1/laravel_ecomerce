@@ -15,4 +15,9 @@ class Seller extends Model
         return $this->hasMany('App\Models\Product');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
 }
