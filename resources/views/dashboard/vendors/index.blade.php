@@ -35,6 +35,9 @@
         <div class="card">
             <div class="card-header">
                 <h5>Vendor Details</h5>
+                <div class="btn-popup pull-right">
+                    <a class="btn btn-primary" href="{{ route('seller.create') }}">Add Vendor</a>
+                </div>
             </div>
             <div class="card-body vendor-table">
                 <table class="display" id="basic-1">

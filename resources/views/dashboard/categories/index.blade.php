@@ -36,118 +36,74 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5>Products Category</h5>
+                                <div class="btn-popup pull-right">
+                                    <a href="{{ route('categories.create') }}" class="btn btn-primary">Add Sub Category</a>
+                                </div>
                             </div>
                             <div class="card-body">
-                                <div class="btn-popup pull-right">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-original-title="test" data-target="#exampleModal">Add Category</button>
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title f-w-600" id="exampleModalLabel">Add Physical Product</h5>
-                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form class="needs-validation" action="{{route('categories.store')}}" method="post">
-                                                        <div class="form">
-                                                        @csrf
-                                                            <div class="form-group">
-                                                                <label for="validationCustom01" class="mb-1">Category Name :</label>
-                                                                <input class="form-control" id="validationCustom01" type="text" name="en[name]">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="validationCustom01" class="mb-1">Category Name in Arabic:</label>
-                                                                <input class="form-control" id="validationCustom01" type="text" name="ar[name]">
-                                                            </div>
-                                                            
-                                                            <div class="form-group">
-                                                                <label for="validationCustom01" class="mb-1">Description:</label>
-                                                                <input class="form-control" id="validationCustom01" type="text" name="en[description]">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="validationCustom01" class="mb-1">Description in Arabic:</label>
-                                                                <input class="form-control" id="validationCustom01" type="text" name="ar[description]">
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <input class="btn btn-primary" type="submit" value="Save">
-                                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="table-responsive">
                                     <div id="basicScenario" class="product-physical jsgrid" style="position: relative; height: auto; width: 100%;">
                                     <div class="jsgrid-grid-header jsgrid-header-scrollbar">
                                         <table class="jsgrid-table">
                                             <tr class="jsgrid-header-row">
+                                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 50px;">Image</th>
                                                 <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 100px;">Name</th>
                                                 <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 50px;">Discription</th>
-                                                <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 50px;">Category</th>
                                                 <th class="jsgrid-header-cell jsgrid-control-field jsgrid-align-center" style="width: 50px;">
                                                     <input class="jsgrid-button jsgrid-mode-button jsgrid-insert-mode-button" type="button" title="Switch to inserting">
                                                 </th>
                                             </tr>
-                                            <tr class="jsgrid-filter-row" style="display: table-row;">
-                                                <td class="jsgrid-cell jsgrid-align-center" style="width: 50px;"></td>
-                                                <td class="jsgrid-cell" style="width: 100px;"><input type="text"></td>
-                                                <td class="jsgrid-cell jsgrid-align-right" style="width: 50px;">
-                                                    <input type="number">
-                                                </td>
-                                                <td class="jsgrid-cell" style="width: 50px;">
-                                                    <input type="text">
-                                                </td>
-                                                <td class="jsgrid-cell" style="width: 50px;">
-                                                    <input type="text">
-                                                </td>
-                                                <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center" style="width: 50px;">
-                                                    <input class="jsgrid-button jsgrid-search-button" type="button" title="Search">
-                                                    <input class="jsgrid-button jsgrid-clear-filter-button" type="button" title="Clear filter">
-                                                </td>
-                                            </tr>
-                                            <tr class="jsgrid-insert-row" style="display: none;">
-                                                <td class="jsgrid-cell jsgrid-align-center" style="width: 50px;">
-                                                    <input type="file">
-                                                </td>
-                                                <td class="jsgrid-cell" style="width: 100px;">
-                                                    <input type="text">
-                                                </td>
-                                                <td class="jsgrid-cell jsgrid-align-right" style="width: 50px;">
-                                                    <input type="number">
-                                                </td>
-                                                <td class="jsgrid-cell" style="width: 50px;">
-                                                    <input type="text">
-                                                </td>
-                                                <td class="jsgrid-cell" style="width: 50px;">
-                                                    <input type="text">
-                                                </td>
-                                                <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center" style="width: 50px;">
-                                                    <input class="jsgrid-button jsgrid-insert-button" type="button" title="Insert">
-                                                </td>
-                                            </tr>
                                         </table>
-                                    </div>        
-                                    <div class="jsgrid-grid-body"> 
+                                    </div>
+                                    <div class="jsgrid-grid-body">
                                         <table class="jsgrid-table">
                                             <tbody>
-                                            
-                                                <tr class="jsgrid-row" style="">
-                                                    <td class="jsgrid-cell jsgrid-align-center" style="width: 50px;">
-                                                        <img src="../assets/images/dashboard/product/1.jpg" class="blur-up lazyloaded" style="height: 50px; width: 50px;">
-                                                    </td>
-                                                    <td class="jsgrid-cell" style="width: 100px;">Headphones</td>
-                                                    <td class="jsgrid-cell jsgrid-align-right" style="width: 50px;">$20.00</td>
-                                                    <td class="jsgrid-cell" style="width: 50px;"><i class="fa fa-circle font-success f-12"></i></td>
-                                                    <td class="jsgrid-cell" style="width: 50px;">Electronics</td>
-                                                    <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center" style="width: 50px;">
-                                                        <input class="jsgrid-button jsgrid-edit-button" type="button" title="Edit">
-                                                        <input class="jsgrid-button jsgrid-delete-button" type="button" title="Delete">
-                                                    </td>
-                                                </tr>
+                                                @foreach($categories as $category)
+                                                    <tr class="jsgrid-row" style="">
+                                                        <td class="jsgrid-cell jsgrid-align-center" style="width: 50px;">
+                                                            <img src="../assets/images/dashboard/product/1.jpg" class="blur-up lazyloaded" style="height: 50px; width: 50px;">
+                                                        </td>
+                                                        <td class="jsgrid-cell" style="width: 100px;">{{ $category->name }}</td>
+                                                        <td class="jsgrid-cell" style="width: 50px;">{{ $category->description }}</td>
+                                                        <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center" style="width: 50px;">
+                                                            <a href="{{ route('categories.edit', $category) }}"
+                                                               class="jsgrid-button jsgrid-edit-button"
+                                                               type="button"></a>
+                                                            <a class="jsgrid-button jsgrid-delete-button" data-toggle="modal"
+                                                               data-original-title="Delete" data-target="#deleteSubCategory"
+                                                               type="button"></a>
+
+                                                            <div class="modal fade" id="deleteSubCategory"
+                                                                 tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title f-w-600 text-center"
+                                                                                id="exampleModalLabel">Delete Category</h5>
+                                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <form class="needs-validation"
+                                                                                  action="{{route('categories.destroy', $category) }}"
+                                                                                  method="POST">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <div class="form">
+                                                                                    Delete this Category ?
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <input class="btn btn-primary"
+                                                                                           type="submit" value="Delete">
+                                                                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

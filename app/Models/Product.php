@@ -10,11 +10,13 @@ class Product extends Model implements TranslatableContract
 {
     use Translatable;
     protected $table = 'Products';
+    public $translatedAttributes = ['name', 'description'];
+
     protected $fillable=[
         'seller_id',
         'category_id',
         'sub_category_id',
-        'coupoun_id',
+        'coupon_id',
         'production_date',
         'expiration_date',
         'price',
@@ -25,5 +27,5 @@ class Product extends Model implements TranslatableContract
     {
         return $this->hasMany('App\Models\ProductImage');
     }
-    
+
 }

@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
@@ -26,7 +28,9 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        return view('dashboard.products.create');
+        $categories = Category::all();
+        $sub_categories = SubCategory::all();
+        return view('dashboard.products.create', compact('categories', 'sub_categories'));
     }
 
     /**
@@ -35,9 +39,14 @@ class ProductsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        Product::create($request->except(['_token','image']));
+        Product::create($request->all());
+//        Product::create([
+//            'seller_id' => auth()->user()->id
+//        ]);
+
+        return redirect()->route('products.index');
     }
 
     /**

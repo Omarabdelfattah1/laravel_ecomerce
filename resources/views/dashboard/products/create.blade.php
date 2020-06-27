@@ -56,21 +56,44 @@
                         </div>
                     </div>
                     <div class="col-xl-7">
-                        <form class="needs-validation add-product-form" novalidate="" method="post">
+                        @if($errors->any())
+                            @foreach($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                        @endif
+                        <form class="needs-validation add-product-form" action="{{ route('products.store') }}"
+                              method="post">
+                            @csrf
+                            <input type="hidden" name="seller_id" value="{{ auth()->user()->id }}">
                             <div class="form">
                                 <div class="form-group mb-3 row">
-                                    <label for="validationCustom01" class="col-xl-3 col-sm-4 mb-0">Title :</label>
+                                    <label for="validationCustom01" class="col-xl-3 col-sm-4 mb-0">Name in Arabic:</label>
+                                    <input class="form-control col-xl-8 col-sm-7" id="validationCustom01"
+                                           name="ar[name]" type="text" required="">
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div>
+                                <div class="form-group mb-3 row">
+                                    <label for="validationCustom01" class="col-xl-3 col-sm-4 mb-0">Name in English:</label>
                                     <input class="form-control col-xl-8 col-sm-7" id="validationCustom01" name="en[name]" type="text" required="">
                                     <div class="valid-feedback">Looks good!</div>
                                 </div>
-                                <div class="form-group mb-3 row">
-                                    <label for="validationCustom02" class="col-xl-3 col-sm-4 mb-0">Description :</label>
-                                    <input class="form-control col-xl-8 col-sm-7" name="en[description]" id="validationCustom02" type="text" required="">
-                                    <div class="valid-feedback">Looks good!</div>
-                                </div>
+
+{{--                               <div class="form-group mb-3 row">--}}
+{{--                                    <label for="validationCustom02" class="col-xl-3 col-sm-4 mb-0">Description in English:</label>--}}
+{{--                                    <input class="form-control col-xl-8 col-sm-7" name="en[description]" id="validationCustom02" type="text" required="">--}}
+{{--                                    <div class="valid-feedback">Looks good!</div>--}}
+{{--                                </div>--}}
+{{--                                <div class="form-group mb-3 row">--}}
+{{--                                    <label for="validationCustom02" class="col-xl-3 col-sm-4 mb-0">Description in Arabic:</label>--}}
+{{--                                    <input class="form-control col-xl-8 col-sm-7" name="ar[description]"--}}
+{{--                                           id="validationCustom02" type="text" required="">--}}
+{{--                                    <div class="valid-feedback">Looks good!</div>--}}
+{{--                                </div>--}}
+
                                 <div class="form-group mb-3 row">
                                     <label for="validationCustom02" class="col-xl-3 col-sm-4 mb-0">Price :</label>
-                                    <input class="form-control col-xl-8 col-sm-7" name="price" id="validationCustom02" type="number" required="">
+                                    <input class="form-control col-xl-8 col-sm-7" name="price"
+                                           id="validationCustom02" type="number" name="price" required="">
                                     <div class="valid-feedback">Looks good!</div>
                                 </div>
                                 <!-- <div class="form-group mb-3 row">
@@ -82,9 +105,22 @@
                             <div class="form">
                                 <div class="form-group row" id="ref">
                                     <label for="exampleFormControlSelect1" class="col-xl-3 col-sm-4 mb-0">Category :</label>
-                                    <select name="category" class="form-control digits col-xl-8 col-sm-7" id="exampleFormControlSelect1">
+                                    <select name="category_id" class="form-control digits col-xl-8 col-sm-7"
+                                            id="exampleFormControlSelect1">
                                         @foreach($categories as $category)
                                             <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group row" id="ref">
+                                    <label for="exampleFormControlSelect1" class="col-xl-3 col-sm-4 mb-0">Category :</label>
+                                    <select name="category" class="form-control digits col-xl-8 col-sm-7" id="exampleFormControlSelect1">
+                                        @foreach($categories as $category)
+                                            @foreach($category->SubCategory() as $sub_category)
+                                                <option
+                                                    value="{{--{{$sub_category}}--}}">{{$sub_category->first()
+                                                    ->id}}</option>
+                                            @endforeach
                                         @endforeach
                                     </select>
                                 </div>
@@ -96,10 +132,17 @@
                                         </div>
                                     </fieldset>
                                 </div>
+
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-sm-4">Add Description :</label>
+                                    <label class="col-xl-3 col-sm-4">Add Description in Arabic :</label>
                                     <div class="col-xl-8 col-sm-7 pl-0 description-sm">
-                                        <textarea id="editor1" name="editor1" cols="10" rows="4"></textarea>
+                                        <textarea id="editor1" name="ar[description]" cols="10" rows="4"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-xl-3 col-sm-4">Add Description in English :</label>
+                                    <div class="col-xl-8 col-sm-7 pl-0 description-sm">
+                                        <textarea id="editor1" name="en[description]" cols="10" rows="4"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -125,21 +168,21 @@
     <script src="../assets/js/touchspin/touchspin.js"></script>
     <script src="../assets/js/touchspin/input-groups.min.js"></script>
     <script>
-        // function myFunction() {
-        //     var x = $("#exampleFormControlSelect1").value;
-        //     $.get("{{route('subcatecories.index',x)}}",function(data,){
-        //         $("#ref").after(`
-        //         <div class="form-group row" id="ref">
-        //             <label for="exampleFormControlSelect1" class="col-xl-3 col-sm-4 mb-0">Category :</label>
-        //             <select name="category" class="form-control digits col-xl-8 col-sm-7" id="exampleFormControlSelect1">
-        //                 @foreach($data as $category)
-        //                     <option value="{{$category->id}}">{{$category->name}}</option>
-        //                 @endforeach
-        //             </select>
-        //         </div>
-        //         `);
-        //     });
-        // }
+        {{--function myFunction() {--}}
+        {{--    var x = $("#exampleFormControlSelect1").value;--}}
+        {{--    $.get("{{route('subcatecories.index',x)}}",function(data,){--}}
+        {{--        $("#ref").after(`--}}
+        {{--        <div class="form-group row" id="ref">--}}
+        {{--            <label for="exampleFormControlSelect1" class="col-xl-3 col-sm-4 mb-0">Category :</label>--}}
+        {{--            <select name="category" class="form-control digits col-xl-8 col-sm-7" id="exampleFormControlSelect1">--}}
+        {{--                @foreach($data as $category)--}}
+        {{--                    <option value="{{$category->id}}">{{$category->name}}</option>--}}
+        {{--                @endforeach--}}
+        {{--            </select>--}}
+        {{--        </div>--}}
+        {{--        `);--}}
+        {{--    });--}}
+        {{--}--}}
 </script>
 
     <!-- form validation js-->

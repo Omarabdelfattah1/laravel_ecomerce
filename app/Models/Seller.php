@@ -8,9 +8,11 @@ class Seller extends Model
 {
     protected $table = 'sellers';
 
+    protected $fillable = ['user_id', 'name'];
+
     public function products()
     {
         return $this->hasMany('App\Models\Product');
     }
-    
+
 }

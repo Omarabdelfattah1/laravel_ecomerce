@@ -20,7 +20,7 @@ class CreateSubCategoryTranslationsTable extends Migration
             $table->string('locale')->index();
 
             $table->unique(['sub_category_id', 'locale']);
-            $table->foreignId('sub_category_id')->references('id')->on('sub_category')->onDelete('cascade');
+            $table->foreignId('sub_category_id')->references('id')->on('sub_categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

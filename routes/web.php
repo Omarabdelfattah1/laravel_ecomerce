@@ -18,12 +18,19 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::resource('categories','CategoriesController');
-Route::post('categories/subcategories/{id}','CategoriesController@subCategories')->name('categories.subcategories');
-Route::resource('subcategories','SubCategoriesController');
-Route::resource('products','ProductsController');
+
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/dashboard', 'PagesController@dashboard');
+
+Route::group(['namespace' => 'Dashboard', 'middleware' => 'auth'], function() {
+    Route::resource('categories','CategoriesController');
+    Route::post('categories/subcategories/{id}','CategoriesController@subCategories')->name('categories.subcategories');
+    Route::resource('subcategories','SubCategoriesController');
+    Route::resource('products','ProductsController');
+    Route::get('/dashboard', 'PagesController@dashboard');
+
+
+    Route::resource('seller', 'sellerController');
+});
 // Route::group(['middleware' => 'auth'], function () {
 //     Route::get('dashboard', function() {
 //         if($this->user->isAdmin())
