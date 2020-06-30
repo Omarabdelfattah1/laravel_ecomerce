@@ -1,32 +1,27 @@
-
 @extends('dashboard.layouts.master')
-@section('content')
-
-
 
 @section('css')
-    <!-- Themify icon-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/themify-icons.css') }}">
-@endsection
-<!-- App css-->
+    <!-- jsgrid css-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/jsgrid.css') }}">
 
-    <!-- Container-fluid starts-->
+@endsection
+
+@section('content')
     <div class="container-fluid">
         <div class="page-header">
             <div class="row">
                 <div class="col-lg-6">
                     <div class="page-header-left">
-                        <h3>Product List
+                        <h3>Product
                             <small>Multikart Admin panel</small>
                         </h3>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <ol class="breadcrumb pull-right">
-                        <li class="breadcrumb-item"><a href="index.html"><s
-                        vg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a></li>
+                        <li class="breadcrumb-item"><a href="index.html"><i data-feather="home"></i></a></li>
                         <li class="breadcrumb-item">Physical</li>
-                        <li class="breadcrumb-item active">Product List</li>
+                        <li class="breadcrumb-item active">Product</li>
                     </ol>
                 </div>
             </div>
@@ -34,77 +29,77 @@
     </div>
     <!-- Container-fluid Ends-->
 
+    <!-- Container-fluid starts-->
     <div class="container-fluid">
-        <div class="row products-admin ratio_asos">
-            <div class="col-xl-3 col-sm-6">
+        <div class="row">
+            <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-body product-box">
-                        <div class="img-wrapper">
-                            <div class="front">
-                                <a href="#" class="bg-size" style="background-image: url(&quot;../assets/images/pro3/34.jpg&quot;); background-size: cover; background-position: center center; display: block;"><img src="../assets/images/pro3/34.jpg" class="img-fluid blur-up bg-img lazyloaded" alt="" style="display: none;"></a>
-                                <div class="product-hover">
-                                    <ul>
-                                        <li>
-                                            <button class="btn" type="button" data-original-title="" title=""><i class="ti-pencil-alt"></i></button>
-                                        </li>
-                                        <li>
-                                            <button class="btn" type="button" data-toggle="modal" data-target="#exampleModalCenter" data-original-title="" title=""><i class="ti-trash"></i></button>
-                                        </li>
-                                    </ul>
-                                </div>
+                    <div class="card-header">
+                        <h5>Products</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="btn-popup pull-right">
+                            <div class="btn-popup pull-right">
+                                <a href="{{ route('products.create') }}" class="btn btn-primary">Add Product</a>
                             </div>
                         </div>
-                        <div class="product-detail">
-                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
-                            <a href="#">
-                                <h6>Slim Fit Cotton Shirt</h6>
-                            </a>
-                            <h4>$500.00 <del>$600.00</del></h4>
-                            <ul class="color-variant">
-                                <li class="bg-light0"></li>
-                                <li class="bg-light1"></li>
-                                <li class="bg-light2"></li>
-                            </ul>
+                        <div class="table-responsive">
+                            <div id="basicScenario" class="product-physical jsgrid" style="position: relative; height: auto; width: 100%;">
+                                <div class="jsgrid-grid-header jsgrid-header-scrollbar">
+                                    <table class="jsgrid-table">
+                                        <tr class="jsgrid-header-row">
+                                            <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 50px;">Image</th>
+                                            <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 100px;">Name</th>
+                                            <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 50px;">Discription</th>
+                                            <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 50px;">Category</th>
+                                            <th class="jsgrid-header-cell jsgrid-header-sortable" style="width: 50px;">Sub Category</th>
+                                            <th class="jsgrid-header-cell jsgrid-control-field jsgrid-align-center" style="width: 50px;">
+                                                <input class="jsgrid-button jsgrid-mode-button jsgrid-insert-mode-button" type="button" title="Switch to inserting">
+                                            </th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="jsgrid-grid-body">
+                                    <table class="jsgrid-table">
+                                        <tbody>
+                                        @foreach($Products as $Product)
+                                            <tr class="jsgrid-row" style="">
+                                                <td class="jsgrid-cell jsgrid-align-center" style="width: 50px;">
+                                                    <img src="{{asset('public/images/products'.$Product->images()->first()->path)}}" class="blur-up lazyloaded" style="height: 50px; width: 50px;">
+                                                </td>
+                                                <td class="jsgrid-cell" style="width: 100px;">{{ $Product->name }}</td>
+                                                <td class="jsgrid-cell" style="width: 50px;">{{ $Product->description }}</td>
+                                                <td class="jsgrid-cell" style="width: 50px;">{{ $Product->category->name }}</td>
+                                                <td class="jsgrid-cell" style="width: 50px;">{{ $Product->subcategory->name}}</td>
+                                                <td class="jsgrid-cell jsgrid-control-field jsgrid-align-center" style="width: 50px;">
+                                                    <button class="jsgrid-button jsgrid-edit-button" type="button" title="Edit"><a href="{{route('products.edit',$Product)}}"></a></button>
+                                                    <button class="jsgrid-button jsgrid-delete-button" type="button" title="Delete"><a href="{{route('products.destroy',$Product)}}"></a></button>
+                                                    
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-sm-6">
-                <div class="card">
-                    <div class="card-body product-box">
-                        <div class="img-wrapper">
-                            <div class="front">
-                                <a href="#" class="bg-size" style="background-image: url(&quot;../assets/images/electronics/product/1.jpg&quot;); background-size: cover; background-position: center center; display: block;"><img src="../assets/images/electronics/product/1.jpg" class="img-fluid blur-up bg-img lazyloaded" alt="" style="display: none;"></a>
-                                <div class="product-hover">
-                                    <ul>
-                                        <li>
-                                            <button class="btn" type="button" data-original-title="" title=""><i class="ti-pencil-alt"></i></button>
-                                        </li>
-                                        <li>
-                                            <button class="btn" type="button" data-toggle="modal" data-target="#exampleModalCenter" data-original-title="" title=""><i class="ti-trash"></i></button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-detail">
-                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></div>
-                            <a href="#">
-                                <h6>Slim Fit Cotton Shirt</h6>
-                            </a>
-                            <h4>$500.00 <del>$600.00</del></h4>
-                            <ul class="color-variant">
-                                <li class="bg-light0"></li>
-                                <li class="bg-light1"></li>
-                                <li class="bg-light2"></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
         </div>
+        <!-- Container-fluid Ends-->
+
     </div>
 
+    <!-- footer start-->
+
+@endsection
+
+
+@section('js')
+    <!-- Jsgrid js-->
+    <script src="{{ asset('assets/js/jsgrid/jsgrid.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jsgrid/griddata-transactions.js') }}"></script>
+    <script src="{{ asset('assets/js/jsgrid/jsgrid-transactions.js') }}"></script>
 
 @endsection

@@ -13,14 +13,14 @@ class CreateSubCategoryTranslationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_category_translations', function (Blueprint $table) {
+        Schema::create('subcategory_translations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('description');
             $table->string('locale')->index();
 
-            $table->unique(['sub_category_id', 'locale']);
-            $table->foreignId('sub_category_id')->references('id')->on('sub_category')->onDelete('cascade');
+            $table->unique(['subcategory_id', 'locale']);
+            $table->foreignId('subcategory_id')->references('id')->on('subcategories')->onDelete('cascade');
             $table->timestamps();
         });
     }

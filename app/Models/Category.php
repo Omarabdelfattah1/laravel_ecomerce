@@ -7,13 +7,14 @@ use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 class Category extends Model implements TranslatableContract
 {
-    protected $table = 'category';
+    protected $table = 'categories';
     use Translatable;
     public $translatedAttributes = ['name', 'description'];
 
-    public function sub_categories()
+
+    public function SubCategory()
     {
-        return $this->hasMany('App\Models\SubCategory');
+        return $this->hasMany('App\Models\SubCategory', 'category_id');
     }
 
     public function products()

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreSellerRequest;
+use App\Models\Seller;
 use Illuminate\Http\Request;
-use App\Models\Product;
-use App\Models\Category;
-use App\Models\SubCategory;
-class ProductsController extends Controller
+
+class SellerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,8 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products=Product::all();
-        return view('dashboard.products.index')->with('products',$products);
+        $sellers = Seller::all();
+        return view('dashboard.vendors.index', compact('sellers'));
     }
 
     /**
@@ -26,7 +27,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        return view('dashboard.products.create')->with('categories',Category::all());
+        return view('dashboard.vendors.create');
     }
 
     /**
@@ -35,9 +36,14 @@ class ProductsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSellerRequest $request)
     {
-        Product::create($request->except(['_token','image']));
+        Seller::create([
+            'user_id' => auth()->id(),
+            'name' => $request->name
+        ]);
+
+        return redirect()->route('seller.index');
     }
 
     /**
@@ -57,9 +63,9 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Seller $seller)
     {
-        //
+        return  view('dashboard.vendors.edit', compact('seller'));
     }
 
     /**
@@ -69,9 +75,10 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Seller $seller)
     {
-        //
+        $seller->update($request->all());
+        return redirect()->route('seller.index');
     }
 
     /**
